@@ -20,4 +20,3 @@ são as quatro operações básicas utilizadas em bases de dados
 relacionais.<p/>
 
 <p>4. Estilize sua página web utilizando o aprendizado de Web1.<p/>
-

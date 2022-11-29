@@ -30,6 +30,14 @@ body {
     padding: 1rem;
 }
 
+.books-show {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    background-color: #A0A0FF;
+    padding: 1rem;
+}
+
 .form-image img {
     width: 31rem;
 }
@@ -127,6 +135,10 @@ body {
     padding: 0.62rem;
     border-radius: 5px;
     cursor: pointer;
+
+    font-size: 0.93rem;
+    font-weight: 500;
+    color: #fff;
 }
 
 .confirm-button button:hover {

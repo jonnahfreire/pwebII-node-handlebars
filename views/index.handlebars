@@ -1,0 +1,65 @@
+<div class="container">    
+    <div class="books-show">
+        <div class="book-placeholder">
+            <div class="book-title">O príncipe cruel</div>
+            <div class="book-title">O príncipe cruel 1</div>
+            <div class="book-title">O príncipe cruel 2</div>
+            <div class="book-title">O príncipe cruel 3</div>
+            <div class="book-title">O príncipe cruel 4</div>
+            <div class="book-title">O príncipe cruel 5</div>
+        </div>
+    </div>
+    <div class="form">
+        <form action="#">
+            <div class="form-header">
+                <div class="title">
+                    <h1>Adicionar livro</h1>
+                </div>
+            </div>
+
+            <div class="inputs">
+                <div class="input-box">
+                    <label for="book-title">Título</label>
+                    <input id="book-title" type="text" name="book-title" placeholder="O Príncipe Cruel" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="book-author">Autor</label>
+                    <input id="book-author" type="text" name="book-author" placeholder="Autor" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="number-pages">Número de páginas</label>
+                    <input id="number-pages" type="number" name="number-pages" placeholder="374" required min="1">
+                </div>
+            </div>
+
+            {{!-- <div class="tag-inputs">
+                <div class="shelf-tag">
+                    <h6>Tag de Estante</h6>
+                </div>
+
+                <div class="tag-group">
+                    <div class="tag-input">
+                        <input type="radio" id="read" name="tag">
+                        <label for="read">Lidos</label>
+                    </div>
+
+                    <div class="tag-input">
+                        <input type="radio" id="reading" name="tag">
+                        <label for="reading">Lendo</label>
+                    </div>
+
+                    <div class="tag-input">
+                        <input type="radio" id="to-read" name="tag">
+                        <label for="to-read">Quero ler</label>
+                    </div>
+                </div>
+            </div> --}}
+
+            <div class="confirm-button">
+                <button type="submit">Adicionar</button>
+            </div>
+        </form>
+    </div>
+</div>
