@@ -11,7 +11,6 @@
                     <th>Título</th>
                     <th>Autor</th>
                     <th>Nº de Páginas</th>
-                    <th>Tag</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -21,9 +20,8 @@
                         <td>{{this.title}}</td>
                         <td>{{this.author}}</td>
                         <td>{{this.pages}}</td>
-                        <td>{{this.tag}}</td>
                         <td>
-                            <button type="button" class="button green edit" onclick="editBook('{{this.id}}','{{this.title}}','{{this.author}}','{{this.pages}}','{{this.tag}}')">editar</button>
+                            <button type="button" class="button green edit" onclick="editBook('{{this.id}}','{{this.title}}','{{this.author}}','{{this.pages}}')">editar</button>
                             <button type="button" class="button red delete" onclick="removeBook('{{this.id}}')">excluir</button>
                         </td>
                     </tr>
@@ -44,33 +42,10 @@
             </header>
 
             <form action="" method="post" class="modal-form add-update-form">
-                <input type="text" name="id" id="idbook" style="display: none;">
+                <input type="text" name="id" class="modal-field id" style="display: none;">
                 <input type="text" name="title" class="modal-field title" placeholder="Título do livro" required>
                 <input type="text" name="author" class="modal-field author" placeholder="Nome do Autor" required>
                 <input type="number" name="pages" class="modal-field pages" placeholder="nº de páginas" required min="1">
-
-                <div class="tag-inputs">
-                    <div class="shelf-tag">
-                        <h6>Tag de Estante</h6>
-                    </div>
-
-                    <div class="tag-group">
-                        <div class="tag-input">
-                            <input type="radio" id="read" class="tag" value="Lidos" name="tag1">
-                            <label for="read">Lidos</label>
-                        </div>
-
-                        <div class="tag-input">
-                            <input type="radio" id="reading" class="tag" value="Lendo" name="tag2">
-                            <label for="reading">Lendo</label>
-                        </div>
-
-                        <div class="tag-input">
-                            <input type="radio" id="to-read" class="tag" value="Quero ler" name="tag3">
-                            <label for="to-read">Quero ler</label>
-                        </div>
-                    </div>
-                </div>
 
             <footer class="modal-footer">
                 <button type="submit" class="button green save">Salvar</button>

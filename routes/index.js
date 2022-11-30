@@ -4,14 +4,8 @@ const router = express.Router();
 
 
 const getBookFromBody = (body) => {
-    const { title, author, pages, tag } = body;
-
-    return {
-        title,
-        author,
-        pages,
-        tag: tag !== undefined ? tag : "--"
-    };
+    const { id, title, author, pages } = body;
+    return { id, title, author, pages };
 }
 
 

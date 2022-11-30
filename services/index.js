@@ -1,11 +1,7 @@
 const mysql = require("mysql2");
+const config = require("../dbconfig/mysql-config");
 
-const conn = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: "library"
-});
+const conn = mysql.createConnection(config);
 
 conn.connect(err => {
     if(err) return false;

@@ -26,26 +26,18 @@ const editBook = (...books) => {
         title: books[1],
         author: books[2],
         pages: books[3],
-        tag: books[4]
     };
     
     document.querySelector('.modal-add-update h2').textContent = "Editar livro";
-    document.querySelector('.add-update-form #idbook').value = book.id;
+    document.querySelector('.add-update-form .id').value = book.id;
     document.querySelector('.add-update-form .title').value = book.title;
     document.querySelector('.add-update-form .author').value = book.author;
     document.querySelector('.add-update-form .pages').value = book.pages;
     
-    const tags = document.querySelectorAll('.add-update-form .tag');
-
-    tags.forEach(tag => {
-        if(tag.value === book.tag) tag.setAttribute("checked", true);
-    });
-
     document.getElementById('modal-add-update').classList.toggle('active');
 }
 
 const removeBook = (id) => {
-    console.log(id);
     const modal = document.getElementById('modal-remove');
     modal.classList.toggle('active');
 
