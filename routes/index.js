@@ -3,6 +3,18 @@ const mysqlService = require('../services');
 const router = express.Router();
 
 
+const getBookFromBody = (body) => {
+    const { title, author, pages, tag } = body;
+
+    return {
+        title,
+        author,
+        pages,
+        tag: tag !== undefined ? tag : "--"
+    };
+}
+
+
 router.get('/', async (_, res) => {
     const books = await mysqlService.getBooks();
 
@@ -13,29 +25,14 @@ router.get('/', async (_, res) => {
 });
 
 router.post('/add-book', (req, res) => {
-    const { title, author, pages, tag } = req.body;
-
-    const book = {
-        title,
-        author,
-        pages,
-        tag: tag !== undefined ? tag : "--"
-    };
+    const book = getBookFromBody(req.body);
 
     mysqlService.addBook(book);
     res.redirect('/');
 });
 
 router.post('/update-book', (req, res) => {
-    const { id, title, author, pages, tag } = req.body;
-
-    const book = {
-        id,
-        title,
-        author,
-        pages,
-        tag: tag !== undefined ? tag : "--"
-    };
+    const book = getBookFromBody(req.body);
 
     mysqlService.updateBook(book);
     res.redirect('/');
