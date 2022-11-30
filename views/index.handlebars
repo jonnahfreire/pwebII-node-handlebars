@@ -1,65 +1,92 @@
-<div class="container">    
-    <div class="books-show">
-        <div class="book-placeholder">
-            <div class="book-title">O príncipe cruel</div>
-            <div class="book-title">O príncipe cruel 1</div>
-            <div class="book-title">O príncipe cruel 2</div>
-            <div class="book-title">O príncipe cruel 3</div>
-            <div class="book-title">O príncipe cruel 4</div>
-            <div class="book-title">O príncipe cruel 5</div>
+<header>
+    <h1 class="header-title">Livros Cadastrados</h1>
+</header>
+
+<main>
+    <button type="button" class="button blue mobile" id="adicionarLivro">Adicionar livro</button>
+    {{#if books}}
+        <table class="records">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Nº de Páginas</th>
+                    <th>Tag</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each books}}
+                    <tr>
+                        <td>{{this.title}}</td>
+                        <td>{{this.author}}</td>
+                        <td>{{this.pages}}</td>
+                        <td>
+                            {{#if "this.tag != undefined"}}
+                                {{this.tag}}
+                            {{else}}
+                                --
+                            {{/if}}
+                        </td>
+                        <td>
+                            <button type="button" class="button green">editar</button>
+                            <button type="button" class="button red">excluir</button>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <div class="nothing-to-show">
+            <span>Nenhum livro cadastrado ainda. Adicione um livro.</span>
+        </div>
+    {{/if}}
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2>Adicionar Livro</h2>
+                <span class="modal-close" id="modalClose">&#10006</span>
+            </header>
+
+            <form action="/add-book" method="post" class="modal-form">
+                <input type="text" name="title" class="modal-field" placeholder="Título do livro" required>
+                <input type="text" name="author" class="modal-field" placeholder="Nome do Autor" required>
+                <input type="number" name="pages" class="modal-field" placeholder="nº de páginas" required min="1">
+
+                <div class="tag-inputs">
+                    <div class="shelf-tag">
+                        <h6>Tag de Estante</h6>
+                    </div>
+
+                    <div class="tag-group">
+                        <div class="tag-input">
+                            <input type="radio" id="read" name="tag">
+                            <label for="read">Lidos</label>
+                        </div>
+
+                        <div class="tag-input">
+                            <input type="radio" id="reading" name="tag">
+                            <label for="reading">Lendo</label>
+                        </div>
+
+                        <div class="tag-input">
+                            <input type="radio" id="to-read" name="tag">
+                            <label for="to-read">Quero ler</label>
+                        </div>
+                    </div>
+                </div>
+
+            <footer class="modal-footer">
+                <button type="submit" class="button green save">Salvar</button>
+                <button type="reset" class="button blue cancel">Cancelar</button>
+            </footer>
+            </form>
         </div>
     </div>
-    <div class="form">
-        <form action="#">
-            <div class="form-header">
-                <div class="title">
-                    <h1>Adicionar livro</h1>
-                </div>
-            </div>
+</main>
 
-            <div class="inputs">
-                <div class="input-box">
-                    <label for="book-title">Título</label>
-                    <input id="book-title" type="text" name="book-title" placeholder="O Príncipe Cruel" required>
-                </div>
-
-                <div class="input-box">
-                    <label for="book-author">Autor</label>
-                    <input id="book-author" type="text" name="book-author" placeholder="Autor" required>
-                </div>
-
-                <div class="input-box">
-                    <label for="number-pages">Número de páginas</label>
-                    <input id="number-pages" type="number" name="number-pages" placeholder="374" required min="1">
-                </div>
-            </div>
-
-            {{!-- <div class="tag-inputs">
-                <div class="shelf-tag">
-                    <h6>Tag de Estante</h6>
-                </div>
-
-                <div class="tag-group">
-                    <div class="tag-input">
-                        <input type="radio" id="read" name="tag">
-                        <label for="read">Lidos</label>
-                    </div>
-
-                    <div class="tag-input">
-                        <input type="radio" id="reading" name="tag">
-                        <label for="reading">Lendo</label>
-                    </div>
-
-                    <div class="tag-input">
-                        <input type="radio" id="to-read" name="tag">
-                        <label for="to-read">Quero ler</label>
-                    </div>
-                </div>
-            </div> --}}
-
-            <div class="confirm-button">
-                <button type="submit">Adicionar</button>
-            </div>
-        </form>
-    </div>
-</div>
+<footer>
+    Equipe: Talita Alves, Leillany Nascimento e Jonna Freire<br>
+    Profª Elizângela Rebouças
+</footer>
