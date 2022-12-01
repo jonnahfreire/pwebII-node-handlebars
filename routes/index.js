@@ -10,12 +10,26 @@ const getBookFromBody = (body) => {
 
 
 router.get('/', async (_, res) => {
+    res.render('login', {
+        title: "Login",
+    });    
+});
+
+router.get('/signup-screen', async (_, res) => {
+    res.render('signup', { title: "Cadastro" });    
+});
+
+router.get('/signup', async (_, res) => {
+    
+});
+
+router.get('/user/books', async (_, res) => {
     const books = await mysqlService.getBooks();
 
     res.render('index', {
-        title: "Biblioteca",
+        title: "Meus livros",
         books: books
-    });    
+    });   
 });
 
 router.post('/add-book', (req, res) => {
