@@ -28,8 +28,8 @@ const getBooks = async () => {
 const addBook = (book) => {
     if(book != undefined) {
         const query = `
-        INSERT INTO books (title, author, pages, tag, createdAt) 
-        VALUES ("${book.title}", "${book.author}", "${book.pages}", "${book.tag}", now())`; 
+        INSERT INTO books (title, author, pages, createdAt) 
+        VALUES ("${book.title}", "${book.author}", "${book.pages}", now())`; 
     
         conn.query(query, (err, __) => {
             err && console.log(err);
@@ -43,7 +43,12 @@ const addBook = (book) => {
 const updateBook = (book) => {
     if(book !== undefined) {
         const query = `
-        UPDATE books SET title = "${book.title}", author = "${book.author}", pages = "${book.pages}", tag = "${book.tag}", updatedAt = now() WHERE id = "${book.id}"`; 
+        UPDATE books 
+        SET title = "${book.title}",
+        author = "${book.author}", 
+        pages = "${book.pages}", 
+        updatedAt = now() 
+        WHERE id = "${book.id}"`; 
     
         conn.query(query, (err, __) => {
             err && console.log(err);
