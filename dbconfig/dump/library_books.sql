@@ -27,12 +27,12 @@ CREATE TABLE `books` (
   `author` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `pages` int unsigned NOT NULL,
-  `createdAt` datetime DEFAULT NULL,
-  `tag` varchar(45) DEFAULT NULL,
-  `updatedAt` datetime DEFAULT NULL,
+  `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `idowner` int NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idbooks_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_idowner_idx` (`idowner`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
+INSERT INTO `books` VALUES (14,'Holy Black','O Príncipe Cruel',374,'2022-12-02 11:36:48','2022-12-02 11:36:48',1);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-30 11:40:20
+-- Dump completed on 2022-12-02 12:33:27

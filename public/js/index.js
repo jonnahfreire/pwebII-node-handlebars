@@ -2,12 +2,6 @@
 const handleOpenModal = () => document.getElementById('modal-add-update')
     .classList.toggle('active');
 
-document.getElementById('adicionarLivro')
-    .addEventListener('click', () => {
-        document.querySelector('.modal-form').setAttribute("action", "/add-book");
-        handleOpenModal();
-});
-
 document.getElementById('modalClose')
     .addEventListener('click', handleOpenModal);
 
@@ -17,6 +11,12 @@ document.querySelector('.modal-footer .cancel')
         handleOpenModal();
 });
 
+const setUserId = (id) => {
+    document.querySelector('.modal-form').setAttribute("action", "/add-book");
+    document.querySelector('.add-update-form .owner').value = id;
+
+    handleOpenModal();
+}
 
 const editBook = (...books) => {
     document.querySelector('.add-update-form').setAttribute("action", "/update-book");
@@ -26,10 +26,12 @@ const editBook = (...books) => {
         title: books[1],
         author: books[2],
         pages: books[3],
+        owner: books[4],
     };
     
     document.querySelector('.modal-add-update h2').textContent = "Editar livro";
     document.querySelector('.add-update-form .id').value = book.id;
+    document.querySelector('.add-update-form .owner').value = book.owner;
     document.querySelector('.add-update-form .title').value = book.title;
     document.querySelector('.add-update-form .author').value = book.author;
     document.querySelector('.add-update-form .pages').value = book.pages;
@@ -37,12 +39,14 @@ const editBook = (...books) => {
     document.getElementById('modal-add-update').classList.toggle('active');
 }
 
-const removeBook = (id) => {
-    const modal = document.getElementById('modal-remove');
-    modal.classList.toggle('active');
 
-    modal.querySelector("#book-id").value = id;
+const modalRemove = document.getElementById('modal-remove');
+modalRemove.querySelector(".cancel-remove").addEventListener("click", () =>  modalRemove.classList.toggle('active'));
+modalRemove.querySelector("#modal-close").addEventListener("click", () =>  modalRemove.classList.toggle('active'));
 
-    modal.querySelector(".cancel-remove").addEventListener("click", () =>  modal.classList.toggle('active'));
-    modal.querySelector("#modal-close").addEventListener("click", () =>  modal.classList.toggle('active'));
+const removeBook = (id, idowner) => {
+    modalRemove.classList.toggle('active');
+
+    modalRemove.querySelector("#book-id").value = id;
+    modalRemove.querySelector("#book-owner").value = idowner;
 }

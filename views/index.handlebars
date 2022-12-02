@@ -1,9 +1,18 @@
 <header>
     <h1 class="header-title">Livros Cadastrados</h1>
 </header>
-
 <main>
-    <button type="button" class="button blue mobile" id="adicionarLivro">Adicionar livro</button>
+
+    <div class="user">
+        <span>Olá, {{user.name}}</span>
+    </div>
+
+    <div class="logout">
+        <form action="/logout" method="post">
+            <button type="submit">Sair</button>
+        </form>
+    </div>
+    <button type="button" class="button blue mobile" id="adicionarLivro" onclick="setUserId({{user.id}})">Adicionar livro</button>
     {{#if books}}
         <table class="records">
             <thead>
@@ -21,8 +30,8 @@
                         <td>{{this.author}}</td>
                         <td>{{this.pages}}</td>
                         <td>
-                            <button type="button" class="button green edit" onclick="editBook('{{this.id}}','{{this.title}}','{{this.author}}','{{this.pages}}')">editar</button>
-                            <button type="button" class="button red delete" onclick="removeBook('{{this.id}}')">excluir</button>
+                            <button type="button" class="button green edit" onclick="editBook('{{this.id}}','{{this.title}}','{{this.author}}','{{this.pages}}', '{{this.idowner}}')">editar</button>
+                            <button type="button" class="button red delete" onclick="removeBook('{{this.id}}', '{{this.idowner}}')">excluir</button>
                         </td>
                     </tr>
                 {{/each}}
@@ -43,6 +52,7 @@
 
             <form action="" method="post" class="modal-form add-update-form">
                 <input type="text" name="id" class="modal-field id" style="display: none;">
+                <input type="text" name="owner" class="modal-field owner" style="display: none;">
                 <input type="text" name="title" class="modal-field title" placeholder="Título do livro" required>
                 <input type="text" name="author" class="modal-field author" placeholder="Nome do Autor" required>
                 <input type="number" name="pages" class="modal-field pages" placeholder="nº de páginas" required min="1">
@@ -63,6 +73,7 @@
 
             <form action="/remove-book" method="post" class="modal-form delete">
                 <input type="text" name="id" id="book-id" style="display: none;">
+                <input type="text" name="owner" id="book-owner" style="display: none;">
                 
                 <div class="tag-inputs">
                     <h3 class="shelf-tag">Tem certeza que quer remover este livro?</h3>

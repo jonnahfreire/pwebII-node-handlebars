@@ -4,53 +4,155 @@ const router = express.Router();
 
 
 const getBookFromBody = (body) => {
-    const { id, title, author, pages } = body;
-    return { id, title, author, pages };
+    return { 
+        id: body.id, 
+        title: body.title, 
+        author: body.author, 
+        pages: body.pages, 
+        owner: body.owner 
+    };
 }
 
+class State {
+    state = {};
+    
+    constructor(state) {
+        this.state = state;
+    }
+
+    static current() {return this.state;}
+
+    setState(newState) {
+        if(this.state === undefined) return;
+        const stateKeys = Object.keys(this.state);
+        
+        for (let key of Object.keys(newState)) {
+            if(stateKeys.includes(key)) {
+                if(typeof this.state[key] == "object") {                    
+                    for (let _key of Object.keys(newState[key])) {
+                        if(Object.keys(this.state[key]).includes(_key)) {
+                                this.state[key][_key] = newState[key][_key];
+                        }
+                    }
+
+                } else {
+                    this.state[key] = newState[key];
+                }
+            }
+        }
+    }
+
+    clearState() {
+        this.state = {};
+    }
+}
+
+const userState = new State({
+    isLogged: false,
+    current: {
+        id: '',
+        name: '',
+        email: '',
+        books: []
+    },
+});
 
 router.get('/', async (_, res) => {
-    res.render('login', {
-        title: "Login",
-    });    
+    res.render('login', { title: "Login", style: "../../public/css/auth-style.css" });    
 });
 
 router.get('/signup-screen', async (_, res) => {
-    res.render('signup', { title: "Cadastro" });    
+    res.render('signup', { title: "Cadastro", style: "../../public/css/auth-style.css" });    
 });
 
-router.get('/signup', async (_, res) => {
+router.post('/signin', async (req, res, next) => {
+    const { email, password } = req.body;
+    const users = await mysqlService.getUsers();
+
+    const user = users.filter(
+        user => user.email == email 
+        && user.password == password
+    )[0];
+        
+    if(user !== undefined) {
+        const books = await mysqlService.getUserBooksById(user.id);
+
+        userState.setState({
+            isLogged: true,
+            current: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                books: books
+            }
+        });
+        
+        next();
+    } else {
+        res.render('login', {
+            title: "Login",
+            error: "Email ou senha inválidos",
+            style: "../../public/css/auth-style.css"
+        }); 
+    }    
+}, async (__, res) => {
+    res.redirect(`/user/${userState.state?.current?.id}/books`);
+});
+
+router.get('/user/:id/books', async (__, res, next) => {
+    if(userState.state?.isLogged) next();
     
-});
+    else res.redirect("/");
 
-router.get('/user/books', async (_, res) => {
-    const books = await mysqlService.getBooks();
-
+}, (__, res) => {    
     res.render('index', {
-        title: "Meus livros",
-        books: books
-    });   
+        title: "Meus Livros",
+        user: userState.state?.current,
+        books: userState.state?.current?.books,
+        style: "../../public/css/index.css"
+    });    
 });
 
-router.post('/add-book', (req, res) => {
+router.post('/signup', async (_, res) => {
+
+});
+
+router.post('/logout', async (_, res) => {
+    userState.setState({ isLogged: false });
+
+    res.redirect("/");
+});
+
+router.post('/add-book', async (req, res) => {
     const book = getBookFromBody(req.body);
+    const books = await mysqlService.addBook(book);
 
-    mysqlService.addBook(book);
-    res.redirect('/');
+    userState.setState({
+        current: { books: books }
+    });
+    
+    res.redirect(`/user/${userState.state?.current?.id}/books`);
 });
 
-router.post('/update-book', (req, res) => {
+router.post('/update-book', async (req, res) => {
     const book = getBookFromBody(req.body);
-
-    mysqlService.updateBook(book);
-    res.redirect('/');
+    const books = await mysqlService.updateBook(book);
+    
+    userState.setState({
+        current: { books: books }
+    });
+    
+    res.redirect(`/user/${userState.state?.current?.id}/books`);
 });
 
-router.post('/remove-book', (req, res) => {
+router.post('/remove-book', async (req, res) => {
     const { id } = req.body;
+    const books = await mysqlService.removeBook(id);
 
-    mysqlService.removeBook(id);
-    res.redirect('/');
+    userState.setState({
+        current: { books: books }
+    })
+    res.redirect(`/user/${userState.state?.current?.id}/books`);
 });
 
 

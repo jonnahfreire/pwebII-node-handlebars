@@ -32,3 +32,4 @@ if(mysqlService.conn) {
 } else {
     console.log(`Houve um erro ao iniciar o serviço.`)
 }
+
