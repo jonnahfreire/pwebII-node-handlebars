@@ -85,11 +85,12 @@ router.post('/signin', async (req, res, next) => {
     if(user !== undefined) {
         const books = await mysqlService.getUserBooksById(user.id);
 
+        const name = user.name.split(" ").length > 2 ? user.name.split(" ")[0] : user.name; 
         userState.setState({
             isLogged: true,
             current: {
                 id: user.id,
-                name: user.name,
+                name,
                 email: user.email,
                 books: books
             }
@@ -161,7 +162,15 @@ router.post('/signup', async (req, res, next) => {
 });
 
 router.post('/logout', async (_, res) => {
-    userState.clearState();
+    userState.setState({
+        isLogged: false,
+        current: {
+            id: '',
+            name: '',
+            email: '',
+            books: []
+        },
+    });
 
     res.redirect("/");
 });
