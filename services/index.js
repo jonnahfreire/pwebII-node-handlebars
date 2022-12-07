@@ -77,7 +77,6 @@ const createUser = async (user) => {
     .then(result => JSON.parse(result))
     .catch(__ => []);
     
-    console.log('INSERTED::: ', (await result).affectedRows > 0);
     return await result;
 }
 
