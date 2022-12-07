@@ -58,11 +58,19 @@ const userState = new State({
 });
 
 router.get('/', async (_, res) => {
-    res.render('login', { title: "Login", style: "../../public/css/auth-style.css" });    
+    res.render('login', 
+    { 
+        title: "Login", 
+        style: "../../public/css/auth-style.css",
+    });    
 });
 
 router.get('/signup-screen', async (_, res) => {
-    res.render('signup', { title: "Cadastro", style: "../../public/css/auth-style.css" });    
+    res.render('signup', 
+    { 
+        title: "Cadastro", 
+        style: "../../public/css/auth-style.css",
+    });    
 });
 
 router.post('/signin', async (req, res, next) => {
@@ -113,12 +121,47 @@ router.get('/user/:id/books', async (__, res, next) => {
     });    
 });
 
-router.post('/signup', async (_, res) => {
+router.post('/signup', async (req, res, next) => {
+    const { username, email, password, confpassword } = req.body;
+    const users = await mysqlService.getUsers();
+    
+    const emailAlreadyExists = users.filter(user => user.email == email)[0];
+    
+    const response = {
+        title: "Cadastro",
+        error: "Este email já está em uso",
+        style: "../../public/css/auth-style.css",
+    };
+    if(emailAlreadyExists !== undefined) {
+        response.error = "Este email já está em uso";
+        res.render('signup', response);
+        
+    } else if(password !== confpassword) {
+        response.error = "Senhas não conferem";
+        res.render('signup', response);
 
+    } else {
+        const result = await mysqlService.createUser({
+            name: username, email, password,
+        });
+
+        if(result) next();
+        else {
+            response.error = "Houve um erro ao cadastrar.";
+            res.render('signup', response);
+        }
+    }
+
+}, (__, res) => {
+    res.render('signup', {
+        title: "Cadastro",
+        success: true,
+        style: "../../public/css/auth-style.css"
+    });
 });
 
 router.post('/logout', async (_, res) => {
-    userState.setState({ isLogged: false });
+    userState.clearState();
 
     res.redirect("/");
 });

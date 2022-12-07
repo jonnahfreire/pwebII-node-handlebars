@@ -14,28 +14,43 @@
             </div>
 
             <div class="inputs">
-                <div class="input-box">
+                <div class="input-box input-group">
                     <label for="username">Nome</label>
                     <input id="username" type="text" name="username" placeholder="Nome completo" required>
                 </div>
 
-                <div class="input-box">
+                <div class="input-box input-group">
                     <label for="email">Email</label>
                     <input id="email" type="email" name="email" placeholder="Email" required>
                 </div>
 
-                <div class="input-box">
+                <div class="input-box input-group">
                     <label for="password">Senha</label>
                     <input id="password" type="password" name="password" placeholder="Senha" required>
                 </div>
 
-                <div class="input-box">
+                <div class="input-box input-group">
                     <label for="confpassword">Confirmar senha</label>
                     <input id="confpassword" type="password" name="confpassword" placeholder="Confirmar senha" required>
                 </div>
             </div>
+            {{#if error}}
+                <div class="errors input-group">
+                  <div class="error-background"></div>
+                    <span>{{error}}</span>
+                </div>
+            {{/if}}
+            {{#if success}}
+                <div class="success input-group">
+                  <div class="success-background"></div>
+                    <span>
+                        Cadastro realizado.
+                        <a href="/">Faça Login</a>
+                    </span>
+                </div>
+            {{/if}}
 
-            <div class="confirm-button">
+            <div class="confirm-button input-group">
                 <button type="submit">Cadastrar</button>
             </div>
         </form>

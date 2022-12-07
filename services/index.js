@@ -61,6 +61,26 @@ const getUserById = async (id) => {
     };
 }
 
+const createUser = async (user) => {
+    const result = await new Promise((resolve, reject) => {
+        const query = `
+        INSERT INTO users (name, email, password) 
+        VALUES ("${user.name}", "${user.email}", "${user.password}")`; 
+        
+        conn.query(query, (err, data) => {
+            if(err) reject(false);
+            
+            console.log("Usuário criado com sucesso!");
+            resolve(JSON.stringify(data));
+        });
+    })
+    .then(result => JSON.parse(result))
+    .catch(__ => []);
+    
+    console.log('INSERTED::: ', (await result).affectedRows > 0);
+    return await result;
+}
+
 const addBook = async (book) => {
     const result = await new Promise((resolve, reject) => {
         const query = `
@@ -124,6 +144,7 @@ const removeBook = async (id) => {
 
 module.exports = {
     conn, 
+    createUser,
     getUsers,
     getUserById,
     getBooks,
