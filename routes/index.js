@@ -15,9 +15,12 @@ const getBookFromBody = (body) => {
 
 class State {
     state = {};
+
+    #initialStateHolder;
     
     constructor(state) {
         this.state = state;
+        this.#initialStateHolder = state;
     }
 
     static current() {return this.state;}
@@ -43,7 +46,7 @@ class State {
     }
 
     clearState() {
-        this.state = {};
+        this.state = this.#initialStateHolder;
     }
 }
 
@@ -162,15 +165,7 @@ router.post('/signup', async (req, res, next) => {
 });
 
 router.post('/logout', async (_, res) => {
-    userState.setState({
-        isLogged: false,
-        current: {
-            id: '',
-            name: '',
-            email: '',
-            books: []
-        },
-    });
+    userState.clearState();
 
     res.redirect("/");
 });
