@@ -32,12 +32,21 @@
                         <td>
                             <button type="button" class="button green edit" onclick="editBook('{{this.id}}','{{this.title}}','{{this.author}}','{{this.pages}}', '{{this.idowner}}')">editar</button>
                             <button type="button" class="button red delete" onclick="removeBook('{{this.id}}', '{{this.idowner}}')">excluir</button>
+                                <br>
+                                    <div class="sidebar-content">
+                                            <input type="checkbox" name="lendo">
+                                            <label for="lendo">Lendo</label>
+                                            <input type="checkbox" name="lido">
+                                            <label for="lido">Lido</label>
+                                            <input type="checkbox" name="queroler">
+                                            <label for="queroler">Quero Ler</label>
+                                    </div>
                         </td>
                     </tr>
                 {{/each}}
             </tbody>
         </table>
-    {{else}}
+    {{else}} 
         <div class="nothing-to-show">
             <span>Nenhum livro cadastrado ainda. Adicione um livro.</span>
         </div>
@@ -57,6 +66,7 @@
                 <input type="text" name="author" class="modal-field author" placeholder="Nome do Autor" required>
                 <input type="number" name="pages" class="modal-field pages" placeholder="nº de páginas" required min="1">
 
+
             <footer class="modal-footer">
                 <button type="submit" class="button green save">Salvar</button>
                 <button type="reset" class="button blue cancel">Cancelar</button>
@@ -64,6 +74,7 @@
             </form>
         </div>
     </div>
+
     <div class="modal modal-delete" id="modal-remove">
         <div class="modal-content">
             <header class="modal-header">
