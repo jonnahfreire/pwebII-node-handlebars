@@ -92,7 +92,13 @@ main{
 .nothing-to-show span {
     color: #fff;
 }
-
+.siberbar-content{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 16px;
+}
 /* records */
 .records{
     width: 100%;
