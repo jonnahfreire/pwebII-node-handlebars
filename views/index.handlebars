@@ -20,6 +20,7 @@
                     <th>Título</th>
                     <th>Autor</th>
                     <th>Nº de Páginas</th>
+                    <th>Tag</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -29,18 +30,10 @@
                         <td>{{this.title}}</td>
                         <td>{{this.author}}</td>
                         <td>{{this.pages}}</td>
+                        <td>{{this.tag}}</td>
                         <td>
                             <button type="button" class="button green edit" onclick="editBook('{{this.id}}','{{this.title}}','{{this.author}}','{{this.pages}}', '{{this.idowner}}')">editar</button>
                             <button type="button" class="button red delete" onclick="removeBook('{{this.id}}', '{{this.idowner}}')">excluir</button>
-                                <br>
-                                    <div class="sidebar-content">
-                                            <input type="checkbox" name="lendo">
-                                            <label for="lendo">Lendo</label>
-                                            <input type="checkbox" name="lido">
-                                            <label for="lido">Lido</label>
-                                            <input type="checkbox" name="queroler">
-                                            <label for="queroler">Quero Ler</label>
-                                    </div>
                         </td>
                     </tr>
                 {{/each}}
@@ -65,12 +58,33 @@
                 <input type="text" name="title" class="modal-field title" placeholder="Título do livro" required>
                 <input type="text" name="author" class="modal-field author" placeholder="Nome do Autor" required>
                 <input type="number" name="pages" class="modal-field pages" placeholder="nº de páginas" required min="1">
+                
+                <div class="tag-inputs">
+                    <div class="shelf-tag">
+                        <h6>Tag de Estante</h6>
+                    </div>
 
+                    <div class="tag-group">
+                        <div class="tag-input">
+                            <input type="radio" id="read" name="tag" value="Lido">
+                            <label for="read">Lido</label>
+                        </div>
 
-            <footer class="modal-footer">
-                <button type="submit" class="button green save">Salvar</button>
-                <button type="reset" class="button blue cancel">Cancelar</button>
-            </footer>
+                        <div class="tag-input">
+                            <input type="radio" id="reading" name="tag" value="Lendo">
+                            <label for="reading">Lendo</label>
+                        </div>
+
+                        <div class="tag-input">
+                            <input type="radio" id="to-read" name="tag" value="Quero ler">
+                            <label for="to-read">Quero ler</label>
+                        </div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button type="submit" class="button green save">Salvar</button>
+                    <button type="reset" class="button blue cancel">Cancelar</button>
+                </footer>
             </form>
         </div>
     </div>

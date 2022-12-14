@@ -4,12 +4,14 @@ const router = express.Router();
 
 
 const getBookFromBody = (body) => {
+    console.log(body)
     return { 
         id: body.id, 
         title: body.title, 
         author: body.author, 
         pages: body.pages, 
-        owner: body.owner 
+        owner: body.owner,
+        tag: body.tag == "on" ? "--" : body.tag
     };
 }
 

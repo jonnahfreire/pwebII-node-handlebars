@@ -83,8 +83,8 @@ const createUser = async (user) => {
 const addBook = async (book) => {
     const result = await new Promise((resolve, reject) => {
         const query = `
-        INSERT INTO books (title, author, pages, idowner, createdAt) 
-        VALUES ("${book.title}", "${book.author}", "${book.pages}", "${book.owner}", now())`; 
+        INSERT INTO books (title, author, pages, idowner, tag, createdAt) 
+        VALUES ("${book.title}", "${book.author}", "${book.pages}", "${book.owner}", "${book.tag}", now())`; 
         
         conn.query(query, (err, data) => {
             if(err) reject(false);
@@ -106,6 +106,7 @@ const updateBook = async (book) => {
         SET title = "${book.title}",
         author = "${book.author}", 
         pages = "${book.pages}", 
+        tag = "${book.tag}", 
         updatedAt = now() 
         WHERE id = "${book.id}"`; 
         
